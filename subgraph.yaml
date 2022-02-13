@@ -1,0 +1,35 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: mainnet
+    source:
+      address: "0xD533a949740bb3306d119CC777fa900bA034cd52"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+        - Approval
+        - UpdateMiningParameters
+        - SetMinter
+        - SetAdmin
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: UpdateMiningParameters(uint256,uint256,uint256)
+          handler: handleUpdateMiningParameters
+        - event: SetMinter(address)
+          handler: handleSetMinter
+        - event: SetAdmin(address)
+          handler: handleSetAdmin
+      file: ./src/mapping.ts
